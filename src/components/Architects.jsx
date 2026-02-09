@@ -181,7 +181,7 @@ root.render(<React.StrictMode><App /></React.StrictMode>);
         '${import.meta.env.VITE_SUPABASE_ANON_KEY}'
       );
     ` }} theme="dark"
-                options={{ externalResources: ["https://cdn.tailwindcss.com"], editorHeight: "100%", showTabs: false, editorWidthPercentage: window.innerWidth < 768 ? 0 : 40, resizablePanels: true }}
+                options={{ externalResources: ["https://cdn.tailwindcss.com"], editorHeight: "100%", showTabs: true, showNavigator: true, layout: window.innerWidth < 768 ? "tab" : "preview", editorWidthPercentage: window.innerWidth < 768 ? 100 : 40, resizablePanels: true }}
                 customSetup={{ dependencies: { "lucide-react": "latest", "react-router-dom": "latest", "@supabase/supabase-js": "latest" } }}
                 style={{ height: '100%' }}
               />
