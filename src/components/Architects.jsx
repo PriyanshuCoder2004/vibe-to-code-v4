@@ -4,6 +4,7 @@ import { Sandpack } from "@codesandbox/sandpack-react";
 import { Box, Code2, Play, Image as ImageIcon, AlertCircle, Send, BrainCircuit, Terminal, Download } from "lucide-react";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { Eye, EyeOff } from "lucide-react";
 
 const Architect = () => {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ const Architect = () => {
   const [error, setError] = useState(null);
   const [chatInput, setChatInput] = useState("");
   const [thoughts, setThoughts] = useState([]);
+  const [showSketch, setShowSketch] = useState(true);
 
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
@@ -126,42 +128,50 @@ root.render(<React.StrictMode><App /></React.StrictMode>);
   };
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-950 text-white p-4 font-sans overflow-hidden">
-      <div className="flex justify-between items-center mb-4 bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800">
+    <div className="flex flex-col h-screen bg-zinc-950 text-white p-2 md:p-4 font-sans overflow-hidden">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4 bg-zinc-900/80 p-4 rounded-2xl border border-zinc-800">
         <div className="flex items-center gap-3">
           <BrainCircuit className="text-indigo-400 animate-pulse" size={28} />
           <div>
-            <h1 className="text-xl font-black uppercase">Vibe-to-Code <span className="text-indigo-500">v4</span></h1>
+            <h1 className="text-lg md:text-xl font-black uppercase">Vibe-to-Code <span className="text-indigo-500">v4</span></h1>
           </div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap justify-center gap-2 w-full md:w-auto">
           <input type="file" id="upload" hidden onChange={(e) => setImage(e.target.files[0])} />
-          <label htmlFor="upload" className="bg-zinc-800 px-4 py-2 rounded-xl cursor-pointer hover:bg-zinc-700 text-sm font-bold">Update Sketch</label>
+          <label htmlFor="upload" className="flex-1 md:flex-none text-center bg-zinc-800 px-3 py-2 rounded-xl cursor-pointer hover:bg-zinc-700 text-xs md:text-sm font-bold">Update Sketch</label>
           
           {/* LEVEL 5.1: Export Button */}
-          <button onClick={downloadProject} disabled={!generatedCode} className="bg-emerald-600 px-4 py-2 rounded-xl font-bold hover:bg-emerald-500 disabled:opacity-30 text-sm flex items-center gap-2">
-            <Download size={18} /> Export ZIP
+          <button onClick={downloadProject} disabled={!generatedCode} className="flex-1 md:flex-none justify-center bg-emerald-600 px-3 py-2 rounded-xl font-bold hover:bg-emerald-500 disabled:opacity-30 text-xs md:text-sm flex items-center gap-2">
+            <Download size={16} /> Export ZIP
           </button>
 
-          <button onClick={generateCode} disabled={loading} className="bg-indigo-600 px-6 py-2 rounded-xl font-bold hover:bg-indigo-500 disabled:opacity-50 text-sm">
+          <button 
+    onClick={() => setShowSketch(!showSketch)}
+    className="md:hidden flex-1 bg-zinc-700 p-2 rounded-xl flex items-center justify-center gap-2 text-xs font-bold"
+  >
+    {showSketch ? <EyeOff size={16} /> : <Eye size={16} />}
+    {showSketch ? "Hide Sketch" : "Show Sketch"}
+  </button>
+
+          <button onClick={generateCode} disabled={loading} className="flex-1 md:flex-none bg-indigo-600 px-4 py-2 rounded-xl font-bold hover:bg-indigo-500 disabled:opacity-50 text-xs md:text-sm">
             {loading ? "Reasoning..." : "Generate App"}
           </button>
         </div>
       </div>
 
-      <div className="flex-1 grid grid-cols-12 gap-4 overflow-hidden">
-        <div className="col-span-3 flex flex-col gap-4 overflow-hidden">
-          <div className="flex-1 bg-zinc-900 rounded-3xl border border-zinc-800 p-4 flex items-center justify-center">
-            {image ? <img src={URL.createObjectURL(image)} className="max-h-full rounded-xl" /> : <Box className="opacity-20" size={48} />}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-4 overflow-y-auto md:overflow-hidden">
+        <div className={`${showSketch ? 'flex' : 'hidden'} md:flexcol-span-1 md:col-span-3 flex-col gap-4 min-h-75 md:h-full`}>
+          <div className="flex-1 bg-zinc-900 rounded-3xl border border-zinc-800 p-4 flex items-center justify-center min-h-50">
+            {image ? <img src={URL.createObjectURL(image)} className="max-h-full rounded-xl object-contain" /> : <Box className="opacity-20" size={48} />}
           </div>
-          <div className="h-1/2 bg-black/50 rounded-3xl border border-zinc-800 p-4 flex flex-col">
+          <div className="h-40 md:h-1/2 bg-black/50 rounded-3xl border border-zinc-800 p-4 flex flex-col">
             <div className="flex-1 overflow-y-auto space-y-2 custom-scrollbar">
               {thoughts.map(t => <div key={t.id} className="text-[11px] font-mono text-indigo-300 border-l border-indigo-500/30 pl-2">{">"} {t.message}</div>)}
             </div>
           </div>
         </div>
 
-        <div className="col-span-9 flex flex-col h-full overflow-hidden">
+        <div className="col-span-1 md:col-span-9 flex flex-col h-125 md:h-full overflow-hidden">
           <div className="flex-1 bg-zinc-900 rounded-3xl overflow-hidden border border-zinc-800 relative mb-4">
             {generatedCode ? (
               <Sandpack template="react" files={{ "/App.js": generatedCode, "/supabaseClient.js": `
@@ -171,7 +181,7 @@ root.render(<React.StrictMode><App /></React.StrictMode>);
         '${import.meta.env.VITE_SUPABASE_ANON_KEY}'
       );
     ` }} theme="dark"
-                options={{ externalResources: ["https://cdn.tailwindcss.com"], editorHeight: "100%", editorWidthPercentage: 40, resizablePanels: true }}
+                options={{ externalResources: ["https://cdn.tailwindcss.com"], editorHeight: "100%", showTabs: false, editorWidthPercentage: window.innerWidth < 768 ? 0 : 40, resizablePanels: true }}
                 customSetup={{ dependencies: { "lucide-react": "latest", "react-router-dom": "latest", "@supabase/supabase-js": "latest" } }}
                 style={{ height: '100%' }}
               />
