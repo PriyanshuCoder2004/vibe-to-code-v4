@@ -114,7 +114,7 @@ root.render(<React.StrictMode><App /></React.StrictMode>);
         "react-dom": "^18.0.0",
         "lucide-react": "latest",
         "react-router-dom": "latest",
-        "@supabase/supabase-js": "latest" 
+        "@supabase/supabase-js": "2.39.7" 
       },
       scripts: { "start": "react-scripts start" }
     };
