@@ -22,24 +22,23 @@ Security Injection: I designed a custom prompt-injection layer that automaticall
 * 🎨 **Tailwind CSS v4**: Utility-first styling for rapid UI generation.
 * 🖼️ **Lucide-React**: Consistent and beautiful icon sets.
 * 🛣️ **React Router DOM**: For seamless multi-page application flows.
+*    **SupaBase**: Supabase Managed PostgreSQL database and User Authentication
 
 ---
 
-## ✨ Features
+## ✨ Key Features 🌟
 
-### 🖼️ Multimodal Sketch-to-UI
-Upload a hand-drawn sketch, and the AI performs a spatial hierarchy analysis to identify inputs, buttons, and layouts with high precision.
+* 🎨 **Sketch-to-Code** : Upload an image of a sketch, and watch the AI architect a full React application.
 
-### 💬 Level 3: Conversational Refinement
-Beyond initial generation, users can chat with the UI. Use natural language to say *"Make the background glassmorphic"* and watch the code update live.
+* 🔐 **Production-Ready Auth** : Integrated Supabase Auth for Secure Sign-up, Login, and Logout functionality.
 
-### 🧠 Level 4: Explainable AI (Thought Stream)
-Features a real-time **AI Thought Stream** panel. It visualizes the model's internal reasoning process—from analyzing grid layouts to ensuring credential security.
+* ⚡ **Real-time CRUD** : Live data persistence with the Supabase tasks table for real-world utility.
 
+* 📱 **Fully Responsive** : Optimized for both Desktop and Mobile, featuring a specialized "Show/Hide Sketch" toggle for smaller screens.
 
+* 📦 **Export to ZIP** : Download the entire generated project structure as a .zip file for local development.
 
-### 🔐 Built-in Logic & Navigation
-The agent auto-injects authentication logic (Username: `Priyanshu`, Password: `12345`) and sets up routing between login and dashboard views.
+* 🤖 **Neural Reasoning Log** : View the AI's step-by-step thinking process as it builds your application logic.
 
 ---
 
@@ -50,11 +49,38 @@ The agent auto-injects authentication logic (Username: `Priyanshu`, Password: `1
 
 ---
 
-## 🚀 Getting Started
+## ⚙️ How to Configure 🔧
 
-1. **Clone the Repo**:
-   ```bash
-   git clone [https://github.com/PriyanshuArya/vibe-to-code-v4.git](https://github.com/PriyanshuArya/vibe-to-code-v4.git)
+* 1. **Clone the Repository**
 
+      git clone https://github.com/your-username/vibe-to-code-v4.git
+      cd vibe-to-code-v4
+
+* 2. **Set Up Environment Variables**
+    Create a .env file in the root directory and add your credentials:
+
+    VITE_GEMINI_API_KEY=your_gemini_api_key_here
+    VITE_SUPABASE_URL=your_supabase_project_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+* 3. **Install and Run**
+     
+     npm install
+     npm run dev
+
+
+## 📥 How to Use 📲
+
+* 1. **Upload** : Click the "Update Sketch" button to upload your UI drawing.
+
+* 2. **Generate** : Press "Generate App" to initiate the AI build sequence.
+
+* 3. **Preview** : Use the "Preview" tab in the Sandpack editor to test the live functionality (Auth & CRUD).
+
+* 4. **Refine** : Use the chat input to give further instructions for UI tweaks or logic updates.
+
+* 5. **Download**: Hit "Export ZIP" to save the source code to your machine.
+
+    
 
 
